@@ -133,11 +133,11 @@ const eventSchema = new Schema<EventDocument, EventModel>(
 eventSchema.index({ slug: 1 }, { unique: true });
 
 /**
- * Pre-save hook to:
+ * Pre-validate hook to:
  * - Generate or update the slug when the title changes.
  * - Normalize and validate the date and time formats.
  */
-eventSchema.pre<EventDocument>('save', function preSave(next) {
+eventSchema.pre<EventDocument>('validate', function preValidate(next) {
   try {
     // Only regenerate slug if the title is new or has been modified.
     if (this.isNew || this.isModified('title')) {
